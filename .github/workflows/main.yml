@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Snyk Test for All Projects (Open Source)
         run: |
-            snyk container monitor juice-shop:1.0 --org=cgibbs-team-d --tags="component=pkg:github:${{ github.repository }}@${{ github.ref_name }}"
+            snyk container monitor juice-shop:1.0 --org=cgibbs-team-d --tags="component=pkg:github/${{ github.repository }}@${{ github.ref_name }}"
 
 env:
   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
