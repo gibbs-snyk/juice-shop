@@ -1,9 +1,9 @@
-name: Snyk Test All Projects
+name: Snyk Container Monitor with Component Tag
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
 
