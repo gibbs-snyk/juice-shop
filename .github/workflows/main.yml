@@ -20,7 +20,10 @@ jobs:
             const repo = 'snyk-workflow-master';  // The target repo where the workflow is located
             const workflowFile = '.github/workflows/snyk-workflow-master.yml';  // Path to the workflow
             const branch = 'main';  // The branch to use
-
+      
+            console.log("Repository Owner:", owner);
+            console.log("Workflow Path:", workflowFile);
+      
             // Trigger the workflow using the GitHub API
             const response = await github.rest.actions.createWorkflowDispatch({
               owner: owner,
@@ -31,8 +34,7 @@ jobs:
                 SNYK_TOKEN: '${{ secrets.SNYK_TOKEN }}'  // Pass secrets as needed
               }
             });
-
+      
             console.log('Workflow triggered:', response.status);
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the default GITHUB_TOKEN to authenticate the API request
