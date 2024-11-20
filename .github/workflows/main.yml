@@ -3,38 +3,8 @@ name: Call snyk-workflow-master
 on: workflow_dispatch
 
 jobs:
-  trigger-remote-workflow:
-    runs-on: ubuntu-latest
+  calling-workflow:
+    uses: gibbs-snyk/snyk-workflow-master/.github/workflows/snyk-workflow-master.yml@main
 
-    steps:
-      - name: Set repository owner dynamically
-        id: set-owner
-        run: |
-          echo "REPO_OWNER=${{ github.repository_owner }}" >> $GITHUB_ENV
-
-      - name: Trigger remote workflow using GitHub API
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const owner = process.env.REPO_OWNER;  // Dynamically set owner
-            const repo = 'snyk-workflow-master';  // The target repo where the workflow is located
-            const workflowFile = '.github/workflows/snyk-workflow-master.yml';  // Path to the workflow
-            const branch = 'main';  // The branch to use
-      
-            console.log("Repository Owner:", owner);
-            console.log("Workflow Path:", workflowFile);
-      
-            // Trigger the workflow using the GitHub API
-            const response = await github.rest.actions.createWorkflowDispatch({
-              owner: owner,
-              repo: repo,
-              workflow: workflowFile,
-              ref: branch,
-              inputs: {
-                SNYK_TOKEN: '${{ secrets.SNYK_TOKEN }}'  // Pass secrets as needed
-              }
-            });
-      
-            console.log('Workflow triggered:', response.status);
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the default GITHUB_TOKEN to authenticate the API request
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
