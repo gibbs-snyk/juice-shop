@@ -3,8 +3,13 @@ name: Call snyk-workflow-master
 on: workflow_dispatch
 
 jobs:
-  Call-snyk-master-workflow:
-    uses: ${{ github.repository_owner }}/snyk-workflow-master/.github/workflows/snyk-workflow-master.yml@main
-
-    secrets:
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    print-name:
+        runs-on: ubuntu-latest
+        steps:
+            - name: get-name
+              run: |
+                  echo "REPO_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
+            - name: print-name
+              run: |
+                  echo "${{ env.REPO_NAME }}"
+                  
