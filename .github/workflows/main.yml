@@ -1,29 +1,15 @@
-name: Snyk Container Monitor with Component Tag
+name: Call snyk-workflow-master
 
-on:
-  push:
-    branches:
-      - master
+on: workflow_dispatch
 
 jobs:
+  calling-workflow:
+    uses: ${{ github.repository_owner }}/snyk-workflow-master/.github/workflows/snyk-workflow-master.yml@main
+# By default the Snyk Open Source test will run --all-projects, snyk-filter, and snyk-to-html. Uncomment lines 9+10 to change the behaviour of this test.
+#    with:
+#      flag: "--all-projects"
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-  snyk-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Install Snyk
-        run: |
-            npm install -g snyk  
-            snyk auth $SNYK_TOKEN
-
-      - name: Build docker image for juice-shop 
-        run: |
-            docker build -t juice-shop:1.0 .
-
-      - name: Run Snyk Test for All Projects (Open Source)
-        run: |
-            snyk container monitor juice-shop:1.0 --org=cgibbs-team-d --tags="component=pkg:github/${{ github.repository }}@${{ github.ref_name }}"
-
-env:
-  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
