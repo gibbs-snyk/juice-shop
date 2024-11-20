@@ -2,14 +2,12 @@ name: Call snyk-workflow-master
 
 on: workflow_dispatch
 
+
 jobs:
     print-name:
         runs-on: ubuntu-latest
         steps:
-            - name: get-name
-              run: |
-                  echo "REPO_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
             - name: print-name
               run: |
-                  echo "${{ env.REPO_NAME }}"
+                  echo "${{ github.repository_owner }}"
                   
