@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   calling-workflow:
-    uses: ${{ github.repository_owner }}/snyk-workflow-master/.github/workflows/snyk-workflow-master.yml@main
+    uses: gibbs-snyk/snyk-workflow-master/.github/workflows/snyk-workflow-master.yml@main
 
 # By default the Snyk Open Source test will run --all-projects, snyk-filter, and snyk-to-html. Uncomment lines 9+10 to change the behaviour of this test.
 #    with:
